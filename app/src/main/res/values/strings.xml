@@ -2,9 +2,12 @@
 
     <string name="app_name">Dementia App</string>
 
-    <string name="exitDialog_title">Exit?</string>
-    <string name="exitDialog_message">You shook the device, which was in pinned fullscreen mode.</string>
-    <string name="exitDialog_positive">Yes</string>
-    <string name="exitDialog_negative">No</string>
+    <string name="exitDialog_title">Leave Dementia App?</string>
+    <string name="exitDialog_positive">Exit</string>
+    <string name="exitDialog_negative">Cancel</string>
+    <plurals name="exitDialog_message">
+        <item quantity="one">You shook the device, which was in pinned fullscreen mode.\n\nThis dialog will automatically dismiss in %d second.</item>
+        <item quantity="other">You shook the device, which was in pinned fullscreen mode.\n\nThis dialog will automatically dismiss in %d seconds.</item>
+    </plurals>
 
 </resources>

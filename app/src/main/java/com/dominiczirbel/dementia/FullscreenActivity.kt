@@ -31,19 +31,15 @@ class FullscreenActivity : AppCompatActivity() {
         try {
             devicePolicyManager?.setLockTaskPackages(componentName, arrayOf(packageName))
         } catch (_: SecurityException) {
-            Log.w("MyTag", "Unable to set lock task package")
+            // no-op
         }
     }
 
     override fun onResume() {
         super.onResume()
-        accelerometer?.let { accelerometer ->
-            sensorManager
-                ?.registerListener(shakeListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
-                ?.let { success ->
-                    isShakeListenerRegistered = success
-                }
-        }
+        isShakeListenerRegistered = accelerometer?.let { accelerometer ->
+            sensorManager?.registerListener(shakeListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
+        } == true
     }
 
     override fun onPause() {
@@ -62,7 +58,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun onShake(shakeCount: Int) {
         if (shakeCount == 2) {
-            ExitFragmentDialog().show(supportFragmentManager, "exit")
+            ExitFragmentDialog().show(supportFragmentManager, ExitFragmentDialog.TAG)
         }
     }
 
