@@ -5,14 +5,12 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity.*
 
 class FullscreenActivity : AppCompatActivity() {
 
-    private var devicePolicyManager: DevicePolicyManager? = null
     private var sensorManager: SensorManager? = null
     private var accelerometer: Sensor? = null
 
@@ -24,14 +22,11 @@ class FullscreenActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity)
 
-        devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as? SensorManager
         accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-        try {
-            devicePolicyManager?.setLockTaskPackages(componentName, arrayOf(packageName))
-        } catch (_: SecurityException) {
-            // no-op
+        (getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager)?.runCatching {
+            setLockTaskPackages(componentName, arrayOf(packageName))
         }
     }
 
