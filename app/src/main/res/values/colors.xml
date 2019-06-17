@@ -6,6 +6,8 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="background">#2C0FBF</color>
+
+    <!-- note: if this color is updated, the mipmap pngs should be regenerated with the Image Asset tool -->
     <color name="ic_launcher_background">#2C0FBF</color>
 
 </resources>
