@@ -31,7 +31,7 @@ class BackgroundAnimator(
         var colorsArray = view.resources.getIntArray(colorsRes).toTypedArray()
 
         // append the first color so there is an animation back to it
-        if (colorsArray.isNotEmpty()) {
+        if (colorsArray.size > 1) {
             colorsArray += colorsArray[0]
         }
 
@@ -40,20 +40,23 @@ class BackgroundAnimator(
             colorsArray = colorsArray.map { ColorUtils.blendARGB(it, tint, tintRatio) }.toTypedArray()
         }
 
-        if (colorsArray.size == 1) {
-            view.setBackgroundColor(colorsArray[0])
-            animator = null
-        } else {
-            animator = ObjectAnimator.ofObject(
-                view,
-                "backgroundColor",
-                ArgbEvaluator(),
-                *colorsArray
-            ).apply {
-                repeatMode = ObjectAnimator.RESTART
-                repeatCount = ObjectAnimator.INFINITE
-                duration = DURATION_MS * colorsArray.size
+        animator = when (colorsArray.size) {
+            0 -> null
+            1 -> {
+                view.setBackgroundColor(colorsArray[0])
+                null
             }
+            else ->
+                ObjectAnimator.ofObject(
+                    view,
+                    "backgroundColor",
+                    ArgbEvaluator(),
+                    *colorsArray
+                ).apply {
+                    repeatMode = ObjectAnimator.RESTART
+                    repeatCount = ObjectAnimator.INFINITE
+                    duration = DURATION_MS * colorsArray.size
+                }
         }
     }
 
@@ -65,6 +68,6 @@ class BackgroundAnimator(
 
     companion object {
 
-        private const val DURATION_MS = 1_000L
+        private const val DURATION_MS = 15_000L
     }
 }
