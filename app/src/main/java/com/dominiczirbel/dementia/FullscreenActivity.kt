@@ -38,6 +38,11 @@ class FullscreenActivity : AppCompatActivity() {
             tintRatio = 0.65f
         )
         backgroundAnimator.start()
+
+        startButton.setOnClickListener {
+            setFullscreen()
+            mainMenu.visibility = View.GONE
+        }
     }
 
     override fun onResume() {
@@ -53,14 +58,6 @@ class FullscreenActivity : AppCompatActivity() {
         sensorManager?.unregisterListener(shakeListener)
         isShakeListenerRegistered = false
         backgroundAnimator.pause()
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-
-        if (hasFocus) {
-            setFullscreen()
-        }
     }
 
     private fun onShake(shakeCount: Int) {

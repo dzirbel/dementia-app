@@ -2,6 +2,9 @@
 
     <string name="app_name">Dementia App</string>
 
+    <string name="mainMenu_start">Start</string>
+    <string name="mainMenu_settings">Settings</string>
+
     <string name="exitDialog_title">Leave Dementia App?</string>
     <string name="exitDialog_positive">Exit</string>
     <string name="exitDialog_negative">Cancel</string>
