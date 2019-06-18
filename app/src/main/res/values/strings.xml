@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Dementia App</string>
+    <string name="settingsActivityName">Settings</string>
 
     <string name="mainMenu_start">Start</string>
     <string name="mainMenu_settings">Settings</string>

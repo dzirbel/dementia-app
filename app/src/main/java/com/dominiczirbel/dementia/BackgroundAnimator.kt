@@ -60,11 +60,17 @@ class BackgroundAnimator(
         }
     }
 
-    fun start() = animator?.start()
-
     fun pause() = animator?.pause()
 
     fun resume() = animator?.resume()
+
+    fun toggleAnimation(toggle: Boolean) {
+        if (toggle) {
+            animator?.start()
+        } else {
+            animator?.end()
+        }
+    }
 
     companion object {
 

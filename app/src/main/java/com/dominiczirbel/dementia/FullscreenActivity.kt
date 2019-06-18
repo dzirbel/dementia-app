@@ -2,14 +2,17 @@ package com.dominiczirbel.dementia
 
 import android.app.admin.DevicePolicyManager
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity.*
+import kotlinx.android.synthetic.main.fullscreen_activity.*
 
-class FullscreenActivity : AppCompatActivity() {
+class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var sensorManager: SensorManager? = null
     private var accelerometer: Sensor? = null
@@ -22,7 +25,7 @@ class FullscreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity)
+        setContentView(R.layout.fullscreen_activity)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as? SensorManager
         accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -31,17 +34,26 @@ class FullscreenActivity : AppCompatActivity() {
             setLockTaskPackages(componentName, arrayOf(packageName))
         }
 
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
         backgroundAnimator = BackgroundAnimator(
             view = frameLayout,
             colorsRes = R.array.backgroundColors,
             tintRes = R.color.grey_900,
             tintRatio = 0.65f
         )
-        backgroundAnimator.start()
+
+        // TODO dedup this code with the listener
+        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean("animateBackground", true))
 
         startButton.setOnClickListener {
             setFullscreen()
             mainMenu.visibility = View.GONE
+        }
+
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -58,6 +70,12 @@ class FullscreenActivity : AppCompatActivity() {
         sensorManager?.unregisterListener(shakeListener)
         isShakeListenerRegistered = false
         backgroundAnimator.pause()
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == "animateBackground") {
+            backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean("animateBackground", true))
+        }
     }
 
     private fun onShake(shakeCount: Int) {
