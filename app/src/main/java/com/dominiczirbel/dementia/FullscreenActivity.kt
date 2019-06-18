@@ -17,6 +17,8 @@ class FullscreenActivity : AppCompatActivity() {
     private val shakeListener = ShakeListener(this::onShake)
     private var isShakeListenerRegistered = false
 
+    private lateinit var backgroundAnimator: BackgroundAnimator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,6 +30,14 @@ class FullscreenActivity : AppCompatActivity() {
         (getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager)?.runCatching {
             setLockTaskPackages(componentName, arrayOf(packageName))
         }
+
+        backgroundAnimator = BackgroundAnimator(
+            view = frameLayout,
+            colorsRes = R.array.backgroundColors,
+            tintRes = R.color.grey_900,
+            tintRatio = 0.65f
+        )
+        backgroundAnimator.start()
     }
 
     override fun onResume() {
@@ -35,12 +45,14 @@ class FullscreenActivity : AppCompatActivity() {
         isShakeListenerRegistered = accelerometer?.let { accelerometer ->
             sensorManager?.registerListener(shakeListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
         } == true
+        backgroundAnimator.resume()
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager?.unregisterListener(shakeListener)
         isShakeListenerRegistered = false
+        backgroundAnimator.pause()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

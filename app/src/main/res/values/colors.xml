@@ -5,9 +5,97 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="background">#2C0FBF</color>
-
     <!-- note: if this color is updated, the mipmap pngs should be regenerated with the Image Asset tool -->
     <color name="ic_launcher_background">#2C0FBF</color>
+
+    <!-- for smoothness, defaultBackground should be the first element of backgroundColors -->
+    <color name="defaultBackground">#4a148c</color>
+    <array name="backgroundColors">
+        <item>#4a148c</item>
+        <item>#1a237e</item>
+        <item>#01579b</item>
+        <item>#1b5e20</item>
+        <item>#827717</item>
+        <item>#ff6f00</item>
+        <item>#bf360c</item>
+        <item>#b71c1c</item>
+    </array>
+
+    <!-- Material Design color palette: https://material.io/tools/color -->
+    <color name="red_300">#e57373</color>
+    <color name="red_600">#e53935</color>
+    <color name="red_900">#b71c1c</color>
+
+    <color name="pink_300">#f06292</color>
+    <color name="pink_600">#d81b60</color>
+    <color name="pink_900">#880e4f</color>
+
+    <color name="purple_300">#ba68c8</color>
+    <color name="purple_600">#8e24aa</color>
+    <color name="purple_900">#4a148c</color>
+
+    <color name="deepPurple_300">#9575cd</color>
+    <color name="deepPurple_600">#5e35b1</color>
+    <color name="deepPurple_900">#311b92</color>
+
+    <color name="indigo_300">#7986cb</color>
+    <color name="indigo_600">#3949ab</color>
+    <color name="indigo_900">#1a237e</color>
+
+    <color name="blue_300">#64b5f6</color>
+    <color name="blue_600">#1e88e5</color>
+    <color name="blue_900">#0d47a1</color>
+
+    <color name="lightBlue_300">#4fc3f7</color>
+    <color name="lightBlue_600">#039be5</color>
+    <color name="lightBlue_900">#01579b</color>
+
+    <color name="cyan_300">#4dd0e1</color>
+    <color name="cyan_600">#00acc1</color>
+    <color name="cyan_900">#006064</color>
+
+    <color name="teal_300">#4db6ac</color>
+    <color name="teal_600">#00897b</color>
+    <color name="teal_900">#004d40</color>
+
+    <color name="green_300">#81c784</color>
+    <color name="green_600">#43a047</color>
+    <color name="green_900">#1b5e20</color>
+
+    <color name="lightGreen_300">#aed581</color>
+    <color name="lightGreen_600">#7cb342</color>
+    <color name="lightGreen_900">#33691e</color>
+
+    <color name="lime_300">#dce775</color>
+    <color name="lime_600">#c0ca33</color>
+    <color name="lime_900">#827717</color>
+
+    <color name="yellow_300">#fff176</color>
+    <color name="yellow_600">#fdd835</color>
+    <color name="yellow_900">#f57f17</color>
+
+    <color name="amber_300">#ffd54f</color>
+    <color name="amber_600">#ffb300</color>
+    <color name="amber_900">#ff6f00</color>
+
+    <color name="orange_300">#ffb74d</color>
+    <color name="orange_600">#fb8c00</color>
+    <color name="orange_900">#e65100</color>
+
+    <color name="deepOrange_300">#ff8a65</color>
+    <color name="deepOrange_600">#f4511e</color>
+    <color name="deepOrange_900">#bf360c</color>
+
+    <color name="brown_300">#a1887f</color>
+    <color name="brown_600">#6d4c41</color>
+    <color name="brown_900">#3e2723</color>
+
+    <color name="grey_300">#e0e0e0</color>
+    <color name="grey_600">#757575</color>
+    <color name="grey_900">#212121</color>
+
+    <color name="blueGrey_300">#90a4ae</color>
+    <color name="blueGrey_600">#546e7a</color>
+    <color name="blueGrey_900">#263238</color>
 
 </resources>
