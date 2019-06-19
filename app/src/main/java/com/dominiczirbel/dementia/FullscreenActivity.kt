@@ -14,15 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
 import kotlinx.android.synthetic.main.fullscreen_activity.*
 
-class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class FullscreenActivity : AppCompatActivity() {
 
     private val activityManager by lazy { getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager }
     private val sensorManager by lazy { getSystemService(Context.SENSOR_SERVICE) as? SensorManager }
-
-    private var accelerometer: Sensor? = null
+    private val sharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(this) }
 
     private val shakeListener = ShakeListener(this::onShake)
-    private var isShakeListenerRegistered = false
 
     private lateinit var backgroundAnimator: BackgroundAnimator
 
@@ -33,14 +31,9 @@ class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefer
 
         setContentView(R.layout.fullscreen_activity)
 
-        accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
         (getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager)?.runCatching {
             setLockTaskPackages(componentName, arrayOf(packageName))
         }
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
         backgroundAnimator = BackgroundAnimator(
             view = frameLayout,
@@ -48,9 +41,6 @@ class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefer
             tintRes = R.color.grey_900,
             tintRatio = 0.65f
         )
-
-        // TODO dedup this code with the listener
-        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean("animateBackground", true))
 
         startButton.setOnClickListener {
             toggleMainMenu(false)
@@ -63,16 +53,15 @@ class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefer
 
     override fun onResume() {
         super.onResume()
-        isShakeListenerRegistered = accelerometer?.let { accelerometer ->
-            sensorManager?.registerListener(shakeListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
-        } == true
+        sensorManager?.let { shakeListener.register(it) }
         backgroundAnimator.resume()
+
+        applySettings()
     }
 
     override fun onPause() {
         super.onPause()
-        sensorManager?.unregisterListener(shakeListener)
-        isShakeListenerRegistered = false
+        sensorManager?.let { shakeListener.unregister(it) }
         backgroundAnimator.pause()
     }
 
@@ -84,10 +73,8 @@ class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefer
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == "animateBackground") {
-            backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean("animateBackground", true))
-        }
+    private fun applySettings() {
+        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean("animateBackground", true))
     }
 
     private fun onShake(shakeCount: Int) {
@@ -109,7 +96,7 @@ class FullscreenActivity : AppCompatActivity(), SharedPreferences.OnSharedPrefer
                 mainMenu.visibility = View.GONE
                 frameLayout.systemUiVisibility = FULLSCREEN_FLAGS
 
-                if (isShakeListenerRegistered) {
+                if (shakeListener.isRegistered) {
                     startLockTask()
                 }
             }

@@ -66,7 +66,7 @@ class BackgroundAnimator(
 
     fun toggleAnimation(toggle: Boolean) {
         if (toggle) {
-            animator?.start()
+            animator?.takeIf { !it.isRunning }?.start()
         } else {
             animator?.end()
         }

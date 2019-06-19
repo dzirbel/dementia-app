@@ -22,6 +22,19 @@ class ShakeListener(private val callback: (Int) -> Unit) : SensorEventListener {
     private var lastShake: Long? = null
     private var shakeCount: Int = 1
 
+    var isRegistered: Boolean = false
+        private set
+
+    fun register(sensorManager: SensorManager) {
+        val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        isRegistered = sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI)
+    }
+
+    fun unregister(sensorManager: SensorManager) {
+        sensorManager.unregisterListener(this)
+        isRegistered = false
+    }
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // no-op
     }
