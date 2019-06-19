@@ -7,17 +7,14 @@ import android.os.CountDownTimer
 import androidx.fragment.app.DialogFragment
 import java.util.concurrent.TimeUnit
 
-class ExitFragmentDialog : DialogFragment() {
+class ExitFragmentDialog(private val onExit: () -> Unit) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AlertDialog.Builder(activity)
             .setTitle(R.string.exitDialog_title)
             .setMessage(getDialogMessage(AUTO_DISMISS_SECONDS))
             .setPositiveButton(R.string.exitDialog_positive) { _, _ ->
-                activity?.apply {
-                    stopLockTask()
-                    finish()
-                }
+                onExit()
             }
             .setNegativeButton(R.string.exitDialog_negative) { _, _ ->
                 // no-op

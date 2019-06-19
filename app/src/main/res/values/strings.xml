@@ -6,8 +6,8 @@
     <string name="mainMenu_start">Start</string>
     <string name="mainMenu_settings">Settings</string>
 
-    <string name="exitDialog_title">Leave Dementia App?</string>
-    <string name="exitDialog_positive">Exit</string>
+    <string name="exitDialog_title">Return to main menu?</string>
+    <string name="exitDialog_positive">Return</string>
     <string name="exitDialog_negative">Cancel</string>
     <plurals name="exitDialog_message">
         <item quantity="one">You shook the device, which was in pinned fullscreen mode.\n\nThis dialog will automatically dismiss in %d second.</item>
