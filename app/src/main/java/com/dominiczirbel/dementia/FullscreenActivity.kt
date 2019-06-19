@@ -4,14 +4,12 @@ import android.app.ActivityManager
 import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
 import kotlinx.android.synthetic.main.fullscreen_activity.*
 
 class FullscreenActivity : AppCompatActivity() {
@@ -30,6 +28,11 @@ class FullscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.fullscreen_activity)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
 
         (getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager)?.runCatching {
             setLockTaskPackages(componentName, arrayOf(packageName))

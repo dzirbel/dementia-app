@@ -1,16 +1,16 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blueGrey_600</item>
+        <item name="colorPrimaryDark">@color/blueGrey_900</item>
+        <item name="colorAccent">@color/purple_900</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="SettingsTheme" parent="AppTheme">
