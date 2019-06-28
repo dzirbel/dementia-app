@@ -77,7 +77,7 @@ class FullscreenActivity : AppCompatActivity() {
     }
 
     private fun applySettings() {
-        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean("animateBackground", true))
+        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean(R.string.pref_animateBackground_key, resources))
     }
 
     private fun onShake(shakeCount: Int) {

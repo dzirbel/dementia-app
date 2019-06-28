@@ -14,4 +14,7 @@
         <item quantity="other">You shook the device, which was in pinned fullscreen mode.\n\nThis dialog will automatically dismiss in %d seconds.</item>
     </plurals>
 
+    <string name="pref_animateBackground_key">animateBackground</string>
+    <string name="pref_animateBackground_title">Animate background</string>
+
 </resources>

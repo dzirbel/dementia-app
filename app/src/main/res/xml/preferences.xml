@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
-        app:key="animateBackground"
-        app:title="Animate background"
+        app:key="@string/pref_animateBackground_key"
+        app:title="@string/pref_animateBackground_title"
         android:defaultValue="true" />
 
 </PreferenceScreen>
