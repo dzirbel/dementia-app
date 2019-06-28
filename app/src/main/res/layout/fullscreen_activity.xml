@@ -32,6 +32,7 @@
             android:id="@+id/startButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/space_3"
             android:text="@string/mainMenu_start"
             app:layout_constraintBottom_toTopOf="@id/settingsButton"
             app:layout_constraintTop_toBottomOf="@id/title" />
@@ -41,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_5"
+            android:padding="@dimen/space_3"
             android:text="@string/mainMenu_settings"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/startButton" />
