@@ -7,4 +7,9 @@
         app:title="@string/pref_animateBackground_title"
         android:defaultValue="true" />
 
+    <SwitchPreference
+        app:key="@string/pref_lockTask_key"
+        app:title="@string/pref_lockTask_title"
+        android:defaultValue="true" />
+
 </PreferenceScreen>

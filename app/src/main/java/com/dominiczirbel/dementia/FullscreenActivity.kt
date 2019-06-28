@@ -59,6 +59,7 @@ class FullscreenActivity : AppCompatActivity() {
         sensorManager?.let { shakeListener.register(it) }
         backgroundAnimator.resume()
 
+        applySystemUiVisibility()
         applySettings()
     }
 
@@ -76,12 +77,8 @@ class FullscreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun applySettings() {
-        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean(R.string.pref_animateBackground_key, resources))
-    }
-
     private fun onShake(shakeCount: Int) {
-        if (shakeCount == 2) {
+        if (shakeCount == 2 && isInLockTaskMode()) {
             ExitFragmentDialog { toggleMainMenu(true) }.show(supportFragmentManager, ExitFragmentDialog.TAG)
         }
     }
@@ -90,20 +87,30 @@ class FullscreenActivity : AppCompatActivity() {
         if (showingMainMenu != showMainMenu) {
             showingMainMenu = showMainMenu
 
-            if (showMainMenu) {
-                mainMenu.visibility = View.VISIBLE
-                frameLayout.systemUiVisibility = NON_FULLSCREEN_FLAGS
-
-                stopLockTask()
-            } else {
-                mainMenu.visibility = View.GONE
-                frameLayout.systemUiVisibility = FULLSCREEN_FLAGS
-
-                if (shakeListener.isRegistered) {
-                    startLockTask()
-                }
-            }
+            mainMenu.visibility = if (showMainMenu) View.VISIBLE else View.GONE
+            applySystemUiVisibility()
+            applyLockTaskState()
         }
+    }
+
+    private fun applySettings() {
+        backgroundAnimator.toggleAnimation(sharedPreferences.getBoolean(R.string.pref_animateBackground_key, resources))
+        applyLockTaskState()
+    }
+
+    private fun applyLockTaskState() {
+        if (!showingMainMenu &&
+            sharedPreferences.getBoolean(R.string.pref_lockTask_key, resources) &&
+            shakeListener.isRegistered
+        ) {
+            startLockTask()
+        } else {
+            stopLockTask()
+        }
+    }
+
+    private fun applySystemUiVisibility() {
+        frameLayout.systemUiVisibility = if (showingMainMenu) NON_FULLSCREEN_FLAGS else FULLSCREEN_FLAGS
     }
 
     private fun isInLockTaskMode(): Boolean {
@@ -112,9 +119,9 @@ class FullscreenActivity : AppCompatActivity() {
 
     companion object {
 
-        const val NON_FULLSCREEN_FLAGS = View.SYSTEM_UI_FLAG_VISIBLE
+        private const val NON_FULLSCREEN_FLAGS = View.SYSTEM_UI_FLAG_VISIBLE
 
-        const val FULLSCREEN_FLAGS = View.SYSTEM_UI_FLAG_FULLSCREEN or
+        private const val FULLSCREEN_FLAGS = View.SYSTEM_UI_FLAG_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
     }

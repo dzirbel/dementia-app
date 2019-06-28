@@ -17,4 +17,7 @@
     <string name="pref_animateBackground_key">animateBackground</string>
     <string name="pref_animateBackground_title">Animate background</string>
 
+    <string name="pref_lockTask_key">lockTask</string>
+    <string name="pref_lockTask_title">Lock task mode</string>
+
 </resources>
